@@ -360,6 +360,23 @@ em { font-style: italic; }
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em;
   color: var(--brass-2);
 }
+.cards--services { grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); }
+.card__list {
+  list-style: none; margin-top: 22px; padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  display: grid; gap: 9px;
+}
+.card__list li {
+  position: relative; padding-left: 22px;
+  font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.03em;
+  color: var(--fog); line-height: 1.55;
+}
+.card__list li::before {
+  content: ""; position: absolute; left: 0; top: 5.5px;
+  width: 8px; height: 8px; border: 1px solid var(--brass); border-radius: 50%;
+  transition: background 0.3s;
+}
+.card:hover .card__list li::before { background: var(--brass-glow); }
 
 /* ── Split feature ─────────────────────────────────────────────── */
 .split {

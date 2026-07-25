@@ -44,24 +44,23 @@ commented block at the top of `index.html`.
 If an image ever fails to load, the site degrades gracefully — a styled
 gunmetal/blueprint backdrop appears instead of a broken image.
 
-## ⚠ Placeholder content — replace before launch
+## Content status
 
-All copy was written fresh (the original site's text was unreachable). These
-items are **plausible placeholders, not facts** — verify or replace each one:
+Services, capabilities lists, QMS/ITAR language, and positioning are now
+sourced from the original reticlems.com (via screenshots): Reticle
+Manufacturing Solutions, LLC — manufacturing capabilities, CNC programming
+& setup, R&D/product development consulting, and systems & process design.
+The quality section deliberately mirrors the original's honest framing:
+QMS *modeled after* ISO 9001:2015/AS9100D (non-registered), ITAR registered.
 
-- [ ] **Certifications marquee** (ISO 9001:2015, ITAR, AS9100-aligned, AWS
-      welders) — only keep claims you actually hold
-- [ ] **Stats** (28+ years, 4,200+ projects, 99.6% on-time, 40+ alloys,
-      ±0.0005″, lead times)
+Still **placeholder — verify before launch**:
+
+- [ ] **Stats** (28+ years, 4,200+ projects, 99% on-time, 40+ materials)
 - [ ] **Testimonials** — labeled "Sample of what partners say"; swap in real
       quotes (with permission) and update that heading
 - [ ] **Contact info** — phone is a `555` placeholder; confirm
       `quotes@reticlems.com`, hours, and location (San Clemente assumed)
-- [ ] **Positioning** — "Precision Manufacturing Solutions" is an inferred
-      expansion of "MS"; adjust services/copy to the real offering
-- [ ] **Footer legal line** (ITAR reference)
-
-Search `PLACEHOLDER` in `index.html` to find every flagged block.
+- [ ] **CTA promises** ("quotes within one business day")
 
 ## Form handling
 
