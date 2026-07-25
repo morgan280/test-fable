@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reticle MS — Precision Manufacturing Solutions</title>
+  <meta name="description" content="Reticle MS delivers precision CNC machining, custom fabrication, and inspection-verified quality for aerospace, defense, medical, and industrial clients. Machined to the thousandth. Trusted to deliver.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Reticle MS — Precision Manufacturing Solutions">
+  <meta property="og:description" content="Precision CNC machining, custom fabrication, and inspection-verified quality. Machined to the thousandth. Trusted to deliver.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://reticlems.com">
+  <meta property="og:image" content="https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_54ef3683467947d28943">
+  <meta name="theme-color" content="#0a0c0f">
+
+  <!-- Favicon: brass reticle mark (inline SVG) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0c0f'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23c89b3c' stroke-width='3'/%3E%3Cpath d='M32 6v12M32 46v12M6 32h12M46 32h12' stroke='%23c89b3c' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='3.5' fill='%23e7c167'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!--
+    ============================================================
+    IMAGE SOURCES (AI-generated via KRAYN — FLUX.2 Max / Gemini 3 Pro)
+    These are hot-linked from the render CDN. To store them in the
+    repo instead, run:  bash assets/download-images.sh
+    ============================================================
+    hero      : https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_54ef3683467947d28943
+    macro     : https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_7198065c039a485a9c67
+    weld      : https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_04ddf6ba60f54bdd9249
+    inspect   : https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_fbf97ea6b20e47218a1e
+    facility  : https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_283dc7593df04cd29c5f
+    craftsman : https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_6a2c705132b7438ebfb5
+
+    NOTE: All statistics, certifications, testimonials, and contact
+    details below are PLACEHOLDER copy — replace with verified facts
+    before going live. See README.md for the full checklist.
+    ============================================================
+  -->
+</head>
+<body>
+
+  <!-- ══════════════ PRELOADER ══════════════ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <svg class="preloader__reticle" viewBox="0 0 120 120" fill="none">
+      <circle class="pr-ring pr-ring--outer" cx="60" cy="60" r="52" />
+      <circle class="pr-ring pr-ring--inner" cx="60" cy="60" r="34" />
+      <path class="pr-cross" d="M60 2v24M60 94v24M2 60h24M94 60h24" />
+      <circle class="pr-dot" cx="60" cy="60" r="4" />
+    </svg>
+    <p class="preloader__word">RETICLE&nbsp;MS</p>
+  </div>
+
+  <!-- Scroll progress hairline -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- Crosshair cursor follower (desktop only) -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <svg viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1"/>
+      <path d="M20 0v9M20 31v9M0 20h9M31 20h9" stroke="currentColor" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- ══════════════ NAVIGATION ══════════════ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__brand" aria-label="Reticle MS home">
+        <svg class="nav__mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <circle cx="32" cy="32" r="17" stroke="currentColor" stroke-width="3"/>
+          <path d="M32 6v12M32 46v12M6 32h12M46 32h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="3.5" fill="currentColor"/>
+        </svg>
+        <span class="nav__word">RETICLE<em>MS</em></span>
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="#capabilities" class="nav__link">Capabilities</a>
+        <a href="#process" class="nav__link">Process</a>
+        <a href="#facility" class="nav__link">Facility</a>
+        <a href="#quality" class="nav__link">Quality</a>
+        <a href="#contact" class="nav__link">Contact</a>
+        <a href="#contact" class="btn btn--brass btn--sm nav__cta">Request a Quote</a>
+      </nav>
+
+      <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ══════════════ HERO ══════════════ -->
+    <section class="hero" id="hero">
+      <div class="hero__media" aria-hidden="true">
+        <img class="hero__img" id="heroImg"
+             src="https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_54ef3683467947d28943"
+             alt="" loading="eager" fetchpriority="high">
+        <div class="hero__veil"></div>
+        <div class="hero__grid"></div>
+        <svg class="hero__watermark" viewBox="0 0 600 600" fill="none">
+          <circle cx="300" cy="300" r="260" stroke="currentColor" stroke-width="1"/>
+          <circle cx="300" cy="300" r="190" stroke="currentColor" stroke-width="1" stroke-dasharray="4 10"/>
+          <circle cx="300" cy="300" r="120" stroke="currentColor" stroke-width="1"/>
+          <path d="M300 10v90M300 500v90M10 300h90M500 300h90" stroke="currentColor" stroke-width="1"/>
+          <path d="M300 240v120M240 300h120" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <div class="hero__content container">
+        <p class="hero__eyebrow" data-reveal>
+          <span class="tick" aria-hidden="true"></span>
+          Precision Manufacturing Solutions · San Clemente, CA
+        </p>
+        <h1 class="hero__title">
+          <span class="line-mask"><span class="line">Machined to the</span></span>
+          <span class="line-mask"><span class="line"><em>thousandth.</em></span></span>
+          <span class="line-mask"><span class="line">Trusted to <em>deliver.</em></span></span>
+        </h1>
+        <p class="hero__sub" data-reveal>
+          Reticle MS partners with engineering teams that can't afford a miss —
+          precision CNC machining, certified fabrication, and documented quality
+          on every part that leaves our floor.
+        </p>
+        <div class="hero__actions" data-reveal>
+          <a href="#contact" class="btn btn--brass" data-magnetic>Request a Quote</a>
+          <a href="#capabilities" class="btn btn--ghost" data-magnetic>Explore Capabilities</a>
+        </div>
+
+        <dl class="hero__specs" data-reveal>
+          <div class="spec">
+            <dt>Tolerance</dt>
+            <dd>±0.0005&Prime;</dd>
+          </div>
+          <div class="spec">
+            <dt>Materials</dt>
+            <dd>40+ Alloys</dd>
+          </div>
+          <div class="spec">
+            <dt>Lead&nbsp;Time</dt>
+            <dd>From 5 Days</dd>
+          </div>
+          <div class="spec">
+            <dt>Inspection</dt>
+            <dd>100% FAI</dd>
+          </div>
+        </dl>
+      </div>
+
+      <a href="#trustbar" class="hero__scrollcue" aria-label="Scroll to content">
+        <span class="hero__scrollcue-line"></span>
+        <span class="hero__scrollcue-text">Scroll</span>
+      </a>
+    </section>
+
+    <!-- ══════════════ TRUST MARQUEE ══════════════ -->
+    <!-- PLACEHOLDER: verify every certification claim before launch -->
+    <section class="trustbar" id="trustbar" aria-label="Certifications and standards">
+      <div class="marquee" data-marquee>
+        <div class="marquee__track">
+          <span>ISO 9001:2015 Quality Management</span><i>✳</i>
+          <span>ITAR Registered</span><i>✳</i>
+          <span>AS9100-Aligned Processes</span><i>✳</i>
+          <span>First-Article Inspection Standard</span><i>✳</i>
+          <span>AWS-Certified Welders</span><i>✳</i>
+          <span>Material Certs With Every Shipment</span><i>✳</i>
+          <span>NDA &amp; Controlled-Print Ready</span><i>✳</i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ CAPABILITIES ══════════════ -->
+    <section class="section" id="capabilities">
+      <div class="container">
+        <header class="section__head" data-reveal>
+          <p class="section__eyebrow"><span class="section__num">01</span> Capabilities</p>
+          <h2 class="section__title">Built for <em>critical</em> work.</h2>
+          <p class="section__lede">
+            One roof, full chain of custody — from raw billet to inspected,
+            documented, ready-to-install components.
+          </p>
+        </header>
+
+        <div class="cards">
+          <article class="card" data-reveal>
+            <div class="card__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <svg class="card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M24 6v10M24 32v10M6 24h10M32 24h10"/><circle cx="24" cy="24" r="8"/><circle cx="24" cy="24" r="1.6" fill="currentColor"/>
+            </svg>
+            <h3 class="card__title">CNC Milling</h3>
+            <p class="card__copy">3- to 5-axis machining centers holding tight tolerances across complex geometry, from prototype one-offs to production runs.</p>
+            <p class="card__spec">±0.0005&Prime; · 5-axis · 24/7 lights-out</p>
+          </article>
+
+          <article class="card" data-reveal>
+            <div class="card__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <svg class="card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="5"/><path d="M38 24h6"/>
+            </svg>
+            <h3 class="card__title">CNC Turning</h3>
+            <p class="card__copy">Live-tooling lathes turning shafts, housings, and threaded components with mirror finishes and repeatable concentricity.</p>
+            <p class="card__spec">Ø 0.062&Prime;–16&Prime; · live tooling · bar feed</p>
+          </article>
+
+          <article class="card" data-reveal>
+            <div class="card__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <svg class="card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M10 38 26 22M22 10l16 16-6 6L16 16zM30 34l4 4"/>
+            </svg>
+            <h3 class="card__title">Fabrication &amp; Welding</h3>
+            <p class="card__copy">Certified TIG and MIG welding on stainless, aluminum, and chromoly — weldments that pass inspection the first time.</p>
+            <p class="card__spec">AWS-certified · TIG/MIG · fixtured assemblies</p>
+          </article>
+
+          <article class="card" data-reveal>
+            <div class="card__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <svg class="card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8 34h32M8 34l8-20h16l8 20M20 14v-4h8v4"/>
+            </svg>
+            <h3 class="card__title">Sheet Metal &amp; Forming</h3>
+            <p class="card__copy">Laser-cut, formed, and hardware-inserted sheet metal — brackets, enclosures, and chassis built to print, deburred and clean.</p>
+            <p class="card__spec">Laser · brake forming · PEM insertion</p>
+          </article>
+
+          <article class="card" data-reveal>
+            <div class="card__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <svg class="card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 36c8 4 16 4 24 0M12 28c8 4 16 4 24 0M12 20c8 4 16 4 24 0M12 12c8 4 16 4 24 0"/>
+            </svg>
+            <h3 class="card__title">Finishing &amp; Coatings</h3>
+            <p class="card__copy">Anodize, passivation, powder coat, and plating through a vetted finishing network — parts arrive ready for the line.</p>
+            <p class="card__spec">Type II/III anodize · passivation · powder</p>
+          </article>
+
+          <article class="card" data-reveal>
+            <div class="card__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+            <svg class="card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M24 6v8M24 6l14 8v10c0 9-6 15-14 18-8-3-14-9-14-18V14z"/><path d="m18 24 4 4 8-8"/>
+            </svg>
+            <h3 class="card__title">Metrology &amp; Quality</h3>
+            <p class="card__copy">CMM-verified dimensions, surface finish checks, and full documentation — FAI reports, material certs, and CoC with every order.</p>
+            <p class="card__spec">CMM · optical comparator · FAI / PPAP</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ FEATURE SPLIT ══════════════ -->
+    <section class="section section--tight">
+      <div class="container split">
+        <figure class="split__media" data-reveal-img>
+          <img src="https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_7198065c039a485a9c67"
+               alt="Carbide end mill cutting steel, chips curling away under amber light" loading="lazy">
+          <figcaption class="split__badge" data-reveal>
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M24 6v8M24 34v8M6 24h8M34 24h8"/><circle cx="24" cy="24" r="7"/>
+            </svg>
+            <span><strong>±0.0005&Prime;</strong>CMM-verified</span>
+          </figcaption>
+        </figure>
+        <div class="split__copy">
+          <header class="section__head" data-reveal>
+            <p class="section__eyebrow"><span class="section__num">02</span> The Difference</p>
+            <h2 class="section__title">Tooling, torque, <em>and tenths.</em></h2>
+            <p class="section__lede">
+              Anyone can quote a part. We engineer the path to it — and put the
+              proof in writing.
+            </p>
+          </header>
+          <ul class="checklist">
+            <li data-reveal><strong>DFM feedback in 48 hours.</strong> Send a print or STEP file; get back a manufacturability review, not just a number.</li>
+            <li data-reveal><strong>First-article inspection, standard.</strong> Every new part is measured against the print before the run continues.</li>
+            <li data-reveal><strong>Documentation with every shipment.</strong> Material certs, inspection reports, and certificates of conformance — filed and traceable.</li>
+            <li data-reveal><strong>One accountable partner.</strong> Machining, fabrication, finishing, and assembly coordinated under one roof.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ PROCESS ══════════════ -->
+    <section class="section section--panel" id="process">
+      <div class="container">
+        <header class="section__head section__head--center" data-reveal>
+          <p class="section__eyebrow"><span class="section__num">03</span> Process</p>
+          <h2 class="section__title">From print to part, <em>without surprises.</em></h2>
+        </header>
+
+        <ol class="steps">
+          <li class="step" data-reveal>
+            <span class="step__num">01</span>
+            <h3 class="step__title">Consult &amp; DFM</h3>
+            <p class="step__copy">We review your drawings, flag cost drivers, and lock the spec together before metal moves.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__num">02</span>
+            <h3 class="step__title">Program &amp; Prototype</h3>
+            <p class="step__copy">CAM programming, fixturing, and first articles — proven out and measured before production.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__num">03</span>
+            <h3 class="step__title">Machine &amp; Fabricate</h3>
+            <p class="step__copy">Production runs with in-process checks at every operation, on machines maintained for repeatability.</p>
+          </li>
+          <li class="step" data-reveal>
+            <span class="step__num">04</span>
+            <h3 class="step__title">Inspect &amp; Deliver</h3>
+            <p class="step__copy">Final CMM inspection, documentation package, protective packaging, and on-dock delivery — on the date we promised.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ══════════════ FACILITY BAND ══════════════ -->
+    <section class="band" id="facility">
+      <div class="band__media" aria-hidden="true">
+        <img src="https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_283dc7593df04cd29c5f"
+             alt="" loading="lazy" data-parallax>
+        <div class="band__veil"></div>
+      </div>
+      <div class="band__content container" data-reveal>
+        <p class="section__eyebrow"><span class="section__num">04</span> The Floor</p>
+        <h2 class="section__title">A facility built <em>for uptime.</em></h2>
+        <p class="section__lede">
+          Climate-controlled machining bays, preventive-maintenance schedules,
+          and redundant capacity — so your delivery date doesn't depend on luck.
+        </p>
+        <a href="#contact" class="btn btn--ghost" data-magnetic>Schedule a Facility Tour</a>
+      </div>
+    </section>
+
+    <!-- ══════════════ STATS ══════════════ -->
+    <!-- PLACEHOLDER numbers — replace with verified figures -->
+    <section class="section stats" aria-label="Company statistics">
+      <div class="container stats__grid">
+        <div class="stat" data-reveal>
+          <p class="stat__value"><span data-counter="28" data-suffix="+">0</span></p>
+          <p class="stat__label">Years in Precision Work</p>
+        </div>
+        <div class="stat" data-reveal>
+          <p class="stat__value"><span data-counter="4200" data-suffix="+">0</span></p>
+          <p class="stat__label">Projects Delivered</p>
+        </div>
+        <div class="stat" data-reveal>
+          <p class="stat__value"><span data-counter="99.6" data-decimals="1" data-suffix="%">0</span></p>
+          <p class="stat__label">On-Time Delivery</p>
+        </div>
+        <div class="stat" data-reveal>
+          <p class="stat__value"><span data-counter="40" data-suffix="+">0</span></p>
+          <p class="stat__label">Materials &amp; Alloys</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ QUALITY ══════════════ -->
+    <section class="section section--tight" id="quality">
+      <div class="container split split--reverse">
+        <figure class="split__media" data-reveal-img>
+          <img src="https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_fbf97ea6b20e47218a1e"
+               alt="CMM ruby probe measuring a machined aerospace component" loading="lazy">
+          <figcaption class="split__badge" data-reveal>
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M24 6v8M24 6l14 8v10c0 9-6 15-14 18-8-3-14-9-14-18V14z"/>
+            </svg>
+            <span><strong>100%</strong>FAI on new parts</span>
+          </figcaption>
+        </figure>
+        <div class="split__copy">
+          <header class="section__head" data-reveal>
+            <p class="section__eyebrow"><span class="section__num">05</span> Quality</p>
+            <h2 class="section__title">Measured. Documented. <em>Guaranteed.</em></h2>
+            <p class="section__lede">
+              Quality isn't a department here — it's the operating system.
+              Every claim we make ships with the paperwork to prove it.
+            </p>
+          </header>
+          <div class="chips" data-reveal>
+            <span class="chip">CMM Inspection</span>
+            <span class="chip">FAI Reports</span>
+            <span class="chip">Material Certs</span>
+            <span class="chip">CoC on Request</span>
+            <span class="chip">Surface Finish Verification</span>
+            <span class="chip">Lot Traceability</span>
+          </div>
+          <blockquote class="pullquote" data-reveal>
+            "If it isn't on the report, it didn't happen. If it's on the report,
+            it's in tolerance."
+            <cite>— The Reticle MS quality standard</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ CRAFT / PEOPLE ══════════════ -->
+    <section class="section section--panel craft">
+      <div class="container craft__grid">
+        <figure class="craft__portrait" data-reveal-img>
+          <img src="https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_6a2c705132b7438ebfb5"
+               alt="Veteran machinist inspecting a freshly machined component" loading="lazy">
+        </figure>
+        <div class="craft__copy">
+          <header class="section__head" data-reveal>
+            <p class="section__eyebrow"><span class="section__num">06</span> The Craft</p>
+            <h2 class="section__title">Machines don't hold tolerance. <em>People do.</em></h2>
+          </header>
+          <p class="craft__text" data-reveal>
+            Behind every spindle is a machinist who has spent a career learning
+            what the numbers don't tell you — how a material moves, when a tool
+            is about to go, what a finished part should feel like in the hand.
+            We hire for that judgment, and we keep it.
+          </p>
+          <figure class="craft__weld" data-reveal-img>
+            <img src="https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_04ddf6ba60f54bdd9249"
+                 alt="TIG welder joining a stainless steel frame amid golden sparks" loading="lazy">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ TESTIMONIALS ══════════════ -->
+    <!-- PLACEHOLDER quotes — replace with real client quotes (with permission) -->
+    <section class="section testimonials" aria-label="Client testimonials">
+      <div class="container">
+        <header class="section__head section__head--center" data-reveal>
+          <p class="section__eyebrow"><span class="section__num">07</span> Word on the Floor</p>
+          <h2 class="section__title">Sample of what <em>partners say.</em></h2>
+        </header>
+
+        <div class="quote-slider" id="quoteSlider" data-reveal>
+          <blockquote class="quote is-active">
+            <p>They caught a tolerance stack-up in our drawing that would have cost us a full production run. That's not a vendor — that's a partner.</p>
+            <footer><cite>Engineering Manager · Aerospace OEM</cite></footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>Every delivery lands on the dock when they said it would, with the paperwork complete. Our receiving team notices.</p>
+            <footer><cite>Procurement Lead · Medical Devices</cite></footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>We moved three part families to Reticle after our first order. Finish quality and consistency sold the rest of the team.</p>
+            <footer><cite>Operations Director · Robotics Manufacturer</cite></footer>
+          </blockquote>
+          <div class="quote-dots" role="tablist" aria-label="Testimonial navigation">
+            <button class="quote-dot is-active" aria-label="Testimonial 1"></button>
+            <button class="quote-dot" aria-label="Testimonial 2"></button>
+            <button class="quote-dot" aria-label="Testimonial 3"></button>
+          </div>
+        </div>
+
+        <div class="industries" data-reveal>
+          <p class="industries__label">Serving</p>
+          <div class="chips chips--center">
+            <span class="chip">Aerospace</span>
+            <span class="chip">Defense</span>
+            <span class="chip">Medical</span>
+            <span class="chip">Energy</span>
+            <span class="chip">Robotics</span>
+            <span class="chip">Motorsport</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ CTA BAND ══════════════ -->
+    <section class="cta">
+      <svg class="cta__watermark" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+        <circle cx="300" cy="300" r="260" stroke="currentColor" stroke-width="1"/>
+        <circle cx="300" cy="300" r="150" stroke="currentColor" stroke-width="1" stroke-dasharray="4 10"/>
+        <path d="M300 10v120M300 470v120M10 300h120M470 300h120" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <div class="container cta__inner" data-reveal>
+        <h2 class="cta__title">Send us your print.<br><em>We'll send back a plan.</em></h2>
+        <p class="cta__sub">Quotes within one business day. DFM feedback within two.</p>
+        <div class="cta__actions">
+          <a href="#contact" class="btn btn--brass btn--lg" data-magnetic>Request a Quote</a>
+          <a href="mailto:quotes@reticlems.com" class="cta__mail">quotes@reticlems.com</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ CONTACT ══════════════ -->
+    <!-- PLACEHOLDER contact details — replace with real phone/address -->
+    <section class="section contact" id="contact">
+      <div class="container contact__grid">
+        <div class="contact__info">
+          <header class="section__head" data-reveal>
+            <p class="section__eyebrow"><span class="section__num">08</span> Contact</p>
+            <h2 class="section__title">Let's put it <em>on the machine.</em></h2>
+            <p class="section__lede">
+              Tell us what you're building. Attach a drawing, a STEP file, or a
+              napkin sketch — we'll take it from there.
+            </p>
+          </header>
+
+          <ul class="contact__rows" data-reveal>
+            <li>
+              <span class="contact__key">Phone</span>
+              <a href="tel:+19495550148" class="contact__val">(949) 555-0148</a>
+            </li>
+            <li>
+              <span class="contact__key">Email</span>
+              <a href="mailto:quotes@reticlems.com" class="contact__val">quotes@reticlems.com</a>
+            </li>
+            <li>
+              <span class="contact__key">Hours</span>
+              <span class="contact__val">Mon–Fri · 7:00a–5:00p PT</span>
+            </li>
+            <li>
+              <span class="contact__key">Location</span>
+              <span class="contact__val">San Clemente, California</span>
+            </li>
+          </ul>
+
+          <div class="chips" data-reveal>
+            <span class="chip chip--dark">NDA-Friendly</span>
+            <span class="chip chip--dark">Controlled Prints Welcome</span>
+            <span class="chip chip--dark">Response &lt; 1 Business Day</span>
+          </div>
+        </div>
+
+        <form class="form" id="quoteForm" data-reveal novalidate>
+          <div class="form__row">
+            <label class="field">
+              <span class="field__label">Name</span>
+              <input class="field__input" type="text" name="name" autocomplete="name" required>
+            </label>
+            <label class="field">
+              <span class="field__label">Company</span>
+              <input class="field__input" type="text" name="company" autocomplete="organization">
+            </label>
+          </div>
+          <div class="form__row">
+            <label class="field">
+              <span class="field__label">Email</span>
+              <input class="field__input" type="email" name="email" autocomplete="email" required>
+            </label>
+            <label class="field">
+              <span class="field__label">Phone</span>
+              <input class="field__input" type="tel" name="phone" autocomplete="tel">
+            </label>
+          </div>
+          <label class="field">
+            <span class="field__label">Project details</span>
+            <textarea class="field__input field__input--area" name="details" rows="5"
+              placeholder="Part description, material, quantity, target date…" required></textarea>
+          </label>
+          <p class="form__note">Have drawings? Reply to our confirmation email with attachments, or send directly to quotes@reticlems.com.</p>
+          <button type="submit" class="btn btn--brass btn--full" data-magnetic>Send Quote Request</button>
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a href="#top" class="nav__brand" aria-label="Back to top">
+          <svg class="nav__mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <circle cx="32" cy="32" r="17" stroke="currentColor" stroke-width="3"/>
+            <path d="M32 6v12M32 46v12M6 32h12M46 32h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="32" cy="32" r="3.5" fill="currentColor"/>
+          </svg>
+          <span class="nav__word">RETICLE<em>MS</em></span>
+        </a>
+        <p class="footer__tag">Precision manufacturing solutions.<br>Machined to the thousandth. Trusted to deliver.</p>
+      </div>
+      <nav class="footer__col" aria-label="Capabilities">
+        <h4>Capabilities</h4>
+        <a href="#capabilities">CNC Milling</a>
+        <a href="#capabilities">CNC Turning</a>
+        <a href="#capabilities">Fabrication &amp; Welding</a>
+        <a href="#capabilities">Sheet Metal</a>
+        <a href="#capabilities">Finishing</a>
+      </nav>
+      <nav class="footer__col" aria-label="Company">
+        <h4>Company</h4>
+        <a href="#process">Process</a>
+        <a href="#facility">Facility</a>
+        <a href="#quality">Quality</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="footer__col">
+        <h4>Contact</h4>
+        <a href="tel:+19495550148">(949) 555-0148</a>
+        <a href="mailto:quotes@reticlems.com">quotes@reticlems.com</a>
+        <span>San Clemente, California</span>
+      </div>
+    </div>
+    <div class="container footer__fine">
+      <p>© <span id="year">2026</span> Reticle MS. All rights reserved.</p>
+      <p class="footer__legal">ITAR-controlled data handled per 22 CFR 120–130.<span class="footer__sep">·</span>Specifications subject to engineering review.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
