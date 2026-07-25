@@ -233,7 +233,7 @@
       const body = encodeURIComponent(
         `Name: ${name}\nCompany: ${d.get("company") || "—"}\nEmail: ${email}\nPhone: ${d.get("phone") || "—"}\n\nProject details:\n${details}\n`
       );
-      window.location.href = `mailto:quotes@reticlems.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:M.Fetter@ReticleMS.com?subject=${subject}&body=${body}`;
       status.textContent = "Opening your email client… we'll reply within one business day.";
     });
   }

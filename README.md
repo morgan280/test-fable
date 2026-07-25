@@ -58,8 +58,9 @@ Still **placeholder — verify before launch**:
 - [ ] **Stats** (28+ years, 4,200+ projects, 99% on-time, 40+ materials)
 - [ ] **Testimonials** — labeled "Sample of what partners say"; swap in real
       quotes (with permission) and update that heading
-- [ ] **Contact info** — phone is a `555` placeholder; confirm
-      `quotes@reticlems.com`, hours, and location (San Clemente assumed)
+- [ ] **Contact info** — phone is a `555` placeholder; confirm hours and
+      location (San Clemente assumed). Email is M.Fetter@ReticleMS.com
+      (owner-provided).
 - [ ] **CTA promises** ("quotes within one business day")
 
 ## Form handling
