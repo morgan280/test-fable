@@ -28,14 +28,17 @@ jobs:
           for p in "" "capabilities" "quality-and-compliance" "cnc-programming-and-setup" "about-us" "contact" "home"; do
             curl -sL --max-time 30 -A "$UA" "https://reticlems.com/$p" -o "assets/original/page-${p:-root}.html" || true
           done
-          # known brand assets (the RMS logo + favicon) at full resolution
-          echo "https://img1.wsimg.com/isteam/ip/043b61e4-c4e8-49d5-bf52-087bb6550a0b/EMAIL%20SIGNATURE-6b743b3.png" > urls.txt
-          echo "https://img1.wsimg.com/isteam/ip/043b61e4-c4e8-49d5-bf52-087bb6550a0b/EMAIL%20SIGNATURE-6b743b3.png/:/rs=w:1600" >> urls.txt
-          echo "https://img1.wsimg.com/isteam/ip/043b61e4-c4e8-49d5-bf52-087bb6550a0b/favicon/f76f7b9a-b0dc-48a0-bdc3-da4f196add0e/29ef1597-8acc-457e-833c-01ba66c261c3.png" >> urls.txt
-          # collect image URLs (GoDaddy serves from *.wsimg.com, often protocol-relative) + og:image
-          grep -hoE '(https:)?//[a-z0-9.-]*wsimg\.com[^"<> \\]+' assets/original/*.html | sed 's|^//|https://|' | sort -u >> urls.txt || true
+          # brand assets first, downloaded to fixed names (never sorted or capped away)
+          BASE="https://img1.wsimg.com/isteam/ip/043b61e4-c4e8-49d5-bf52-087bb6550a0b"
+          curl -sL --max-time 30 -A "$UA" "$BASE/EMAIL%20SIGNATURE-6b743b3.png" -o assets/original/rms-logo-src.png || true
+          curl -sL --max-time 30 -A "$UA" "$BASE/EMAIL%20SIGNATURE-6b743b3.png/:/rs=w:1600" -o assets/original/rms-logo-1600.png || true
+          curl -sL --max-time 30 -A "$UA" "$BASE/favicon/f76f7b9a-b0dc-48a0-bdc3-da4f196add0e/29ef1597-8acc-457e-833c-01ba66c261c3.png/:/rs=w:256,h:256,m" -o assets/original/rms-favicon.png || true
+          for f in assets/original/rms-logo-src.png assets/original/rms-logo-1600.png assets/original/rms-favicon.png; do
+            file -b --mime-type "$f" | grep -q '^image/' || rm -f "$f"
+          done
+          # collect remaining image URLs (skip fonts) + og:image
+          grep -hoE '(https:)?//[a-z0-9.-]*wsimg\.com[^"<> \\]+' assets/original/*.html | sed 's|^//|https://|' | grep -v '/gfonts/' | sort -u > urls.txt || true
           grep -hoE '"og:image" content="[^"]+"' assets/original/*.html | grep -oE 'https://[^"]+' >> urls.txt || true
-          grep -hoE 'https://[^"<> ]+\.(png|jpe?g|webp)[^"<> ]*' assets/original/*.html >> urls.txt || true
           sort -u urls.txt | head -80 | while read -r u; do
             h=$(echo "$u" | md5sum | cut -c1-10)
             f="assets/original/$h"
