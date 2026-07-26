@@ -9,3 +9,5 @@ https://img1.wsimg.com/isteam/getty/498381212/:/rs=w:3720,h:1860,cg:true,m/cr=w:
 https://img1.wsimg.com/isteam/getty/498381212/:/rs=w:806,h:403,cg:true,m/cr=w:806,h:403 -> 8ed73b6708.jpg
 https://img1.wsimg.com/isteam/getty/698196954/:/rs=w:1200,cg:true,m -> c4c5b42af4.jpg
 https://img1.wsimg.com/isteam/getty/698196954/:/rs=w:1209,cg:true,m -> 90d554383b.jpg
+https://img1.wsimg.com/isteam/getty/498381212/:/rs=w:1209,h:605,cg:true,m/cr=w:1209,h:605 -> be0a920376.jpg
+https://img1.wsimg.com/isteam/getty/498381212/:/rs=w:1240,h:620,cg:true,m/cr=w:1240,h:620 -> cec2223f8e.jpg
