@@ -35,7 +35,7 @@
   const heroVideo = document.getElementById("heroVideo");
   if (heroVideo && heroVideo.dataset.src && !prefersReduced) {
     const conn = navigator.connection || {};
-    if (!conn.saveData && window.innerWidth >= 700) {
+    if (!conn.saveData) {
       const startVideo = () => setTimeout(() => {
         heroVideo.src = window.innerWidth >= 1100
           ? heroVideo.dataset.src
