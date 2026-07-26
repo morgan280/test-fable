@@ -1,0 +1,55 @@
+name: Fetch original site assets
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/fetch-assets.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-assets
+  cancel-in-progress: true
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download pages and images from reticlems.com
+        run: |
+          set -x
+          mkdir -p assets/original
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+          for p in "" "capabilities" "quality-and-compliance" "cnc-programming-and-setup" "about-us" "contact" "home"; do
+            curl -sL --max-time 30 -A "$UA" "https://reticlems.com/$p" -o "assets/original/page-${p:-root}.html" || true
+          done
+          # collect image URLs (GoDaddy serves from *.wsimg.com) + og:image
+          grep -hoE 'https://[a-z0-9.-]*wsimg\.com[^"<> ]+' assets/original/*.html | sort -u > urls.txt || true
+          grep -hoE '"og:image" content="[^"]+"' assets/original/*.html | grep -oE 'https://[^"]+' >> urls.txt || true
+          grep -hoE 'https://[^"<> ]+\.(png|jpe?g|webp)[^"<> ]*' assets/original/*.html >> urls.txt || true
+          sort -u urls.txt | head -80 | while read -r u; do
+            h=$(echo "$u" | md5sum | cut -c1-10)
+            f="assets/original/$h"
+            curl -sL --max-time 30 --max-filesize 8000000 -A "$UA" "$u" -o "$f" || { rm -f "$f"; continue; }
+            t=$(file -b --mime-type "$f" || echo unknown)
+            case "$t" in
+              image/png)  mv "$f" "$f.png"  && echo "$u -> $h.png"  >> assets/original/manifest.txt ;;
+              image/jpeg) mv "$f" "$f.jpg"  && echo "$u -> $h.jpg"  >> assets/original/manifest.txt ;;
+              image/webp) mv "$f" "$f.webp" && echo "$u -> $h.webp" >> assets/original/manifest.txt ;;
+              *) rm -f "$f" ;;
+            esac
+          done
+          ls -la assets/original | head -100
+
+      - name: Commit harvested assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/original
+          git commit -m "Harvest original reticlems.com assets (logo + photos)" || { echo "nothing harvested"; exit 0; }
+          git push
