@@ -14,37 +14,45 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  discover:
+  produce:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Collect CNC video candidates from Pexels
+      - name: Download, grade, and compress hero video
         run: |
-          set -x
-          mkdir -p assets/video-candidates
+          set -ex
+          mkdir -p assets/video assets/video-candidates
           UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
-          for q in "cnc%20machine" "cnc%20milling%20coolant" "metal%20machining"; do
-            curl -sL --max-time 30 -A "$UA" "https://www.pexels.com/search/videos/$q/" -o "assets/video-candidates/search-$q.html" || true
+          # Pexels video 5998850 — "CNC machine tool cutting metal with coolant spray"
+          # (Pexels license: free for commercial use, no attribution required)
+          curl -sL --max-time 180 -A "$UA" "https://www.pexels.com/download/video/5998850/" -o /tmp/src.mp4
+          file -b --mime-type /tmp/src.mp4 | grep -q '^video/' || { echo "download failed:"; file /tmp/src.mp4; head -c 400 /tmp/src.mp4; exit 1; }
+          DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 /tmp/src.mp4)
+          echo "duration: $DUR"
+          START=$(python3 -c "d=float('$DUR'); print(max(0, min(d*0.2, d-9)))")
+          GRADE="eq=brightness=-0.05:contrast=1.06:saturation=0.8,colorbalance=rs=-0.10:gs=-0.03:bs=0.15:rm=-0.08:gm=-0.02:bm=0.10:rh=-0.06:bh=0.08"
+          # desktop 1600w
+          ffmpeg -y -ss "$START" -t 8 -i /tmp/src.mp4 \
+            -vf "fps=24,scale=1600:-2:flags=lanczos,$GRADE" \
+            -c:v libx264 -profile:v high -preset slow -crf 28 -pix_fmt yuv420p \
+            -movflags +faststart -an assets/video/hero-loop.mp4
+          # small 960w
+          ffmpeg -y -ss "$START" -t 8 -i /tmp/src.mp4 \
+            -vf "fps=24,scale=960:-2:flags=lanczos,$GRADE" \
+            -c:v libx264 -profile:v high -preset slow -crf 30 -pix_fmt yuv420p \
+            -movflags +faststart -an assets/video/hero-loop-sm.mp4
+          # graded preview frames for review
+          for t in 1 4 7; do
+            ffmpeg -y -ss $t -i assets/video/hero-loop.mp4 -frames:v 1 -q:v 3 "assets/video-candidates/preview-$t.jpg"
           done
-          # known-good candidate + discovered ids
-          echo "5998850" > ids.txt
-          grep -hoE '/video/[a-z0-9-]+-[0-9]{5,9}/' assets/video-candidates/*.html | grep -oE '[0-9]{5,9}' >> ids.txt || true
-          sort -u ids.txt | head -14 > ids-final.txt
-          cat ids-final.txt
-          # thumbnails only (small) — full videos come in phase 2 after a human pick
-          while read -r id; do
-            curl -sL --max-time 20 -A "$UA" "https://images.pexels.com/videos/$id/free-video-$id.jpg?auto=compress&w=640" -o "assets/video-candidates/$id.jpg" || continue
-            file -b --mime-type "assets/video-candidates/$id.jpg" | grep -q '^image/' || rm -f "assets/video-candidates/$id.jpg"
-          done < ids-final.txt
-          rm -f assets/video-candidates/*.html
-          ls -la assets/video-candidates/
+          ls -la assets/video assets/video-candidates
 
-      - name: Commit candidate thumbnails
+      - name: Commit outputs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/video-candidates
-          git commit -m "Add Pexels CNC video candidate thumbnails" || { echo "nothing found"; exit 0; }
+          git add assets/video assets/video-candidates
+          git commit -m "Add graded, web-optimized hero video (Pexels 5998850)"
           git push
