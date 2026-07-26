@@ -31,6 +31,24 @@
     });
   });
 
+  /* ── Hero background video (lazy, fallback-safe) ───────── */
+  const heroVideo = document.getElementById("heroVideo");
+  if (heroVideo && heroVideo.dataset.src && !prefersReduced) {
+    const conn = navigator.connection || {};
+    if (!conn.saveData && window.innerWidth >= 700) {
+      const startVideo = () => setTimeout(() => {
+        heroVideo.src = window.innerWidth >= 1100
+          ? heroVideo.dataset.src
+          : (heroVideo.dataset.srcSm || heroVideo.dataset.src);
+        heroVideo.play()
+          .then(() => heroVideo.classList.add("is-playing"))
+          .catch(() => {}); // autoplay blocked or file missing → still image stays
+      }, 250);
+      if (document.readyState === "complete") startVideo();
+      else window.addEventListener("load", startVideo, { once: true });
+    }
+  }
+
   /* ── Sticky nav state + scroll progress ────────────────── */
   const nav = document.getElementById("nav");
   const progress = document.getElementById("scrollProgress");

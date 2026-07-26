@@ -98,6 +98,11 @@
         <img class="hero__img" id="heroImg"
              src="https://krayawn-mcp.delicate-star-fc13.workers.dev/media/img_1c9d2b43f2004f75a362"
              alt="" loading="eager" fetchpriority="high">
+        <!-- Background video: loads lazily after page paint; falls back to the
+             still on mobile, reduced-motion, data-saver, or load failure.
+             data-src is filled once assets/video/hero-loop.mp4 exists. -->
+        <video class="hero__video" id="heroVideo" muted loop playsinline
+               preload="none" data-src="" data-src-sm="" aria-hidden="true"></video>
         <div class="hero__veil"></div>
         <div class="hero__grid"></div>
         <svg class="hero__watermark" viewBox="0 0 600 600" fill="none">
