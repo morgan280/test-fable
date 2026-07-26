@@ -65,6 +65,18 @@ Still **placeholder — verify before launch**:
       (owner-provided).
 - [ ] **CTA promises** ("quotes within one business day")
 
+## Hero background video
+
+`assets/video/hero-loop.mp4` (1600w, 1.3 MB) and `hero-loop-sm.mp4` (960w,
+0.4 MB) are an 8-second loop of real CNC machining footage
+([Pexels #5998850](https://www.pexels.com/video/5998850/), free for
+commercial use, no attribution required), color-graded to the cobalt brand
+and compressed with H.264 + faststart. The page paints instantly with the
+still image; the video lazy-loads after `window.load` and fades in — and is
+skipped entirely on small screens, `prefers-reduced-motion`, or data-saver.
+To swap footage, edit the video id in `.github/workflows/fetch-video.yml`
+and push — the workflow re-downloads, re-grades, and re-commits.
+
 ## Form handling
 
 The quote form composes a pre-filled email via `mailto:`. To capture leads
