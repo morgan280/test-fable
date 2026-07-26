@@ -1,7 +1,8 @@
 # Reticle MS — Fortune 500 Site Redesign
 
 A rich, industrial, trust-forward single-page website for **reticlems.com**,
-designed to Fortune 500 standards: dark gunmetal + brass palette, editorial
+designed to Fortune 500 standards: ink-navy + royal-cobalt + chrome palette
+(drawn from the RMS chrome logo and brand blue), editorial
 serif typography, an animated reticle/crosshair brand motif, scroll-triggered
 reveals, animated counters, parallax, and a magnetic-button CTA system.
 
@@ -18,7 +19,7 @@ assets/download-images.sh   # pulls the AI imagery into the repo (see below)
 
 | Element    | Choice                                                        |
 |------------|---------------------------------------------------------------|
-| Palette    | Deep charcoal `#0a0c0f` · gunmetal panels · brass `#c89b3c` → gold `#e7c167` |
+| Palette    | Ink navy `#070b15` · gunmetal panels · royal cobalt `#4666ec` → `#8ca3ff` · chrome-silver gradient accents (from the RMS logo) |
 | Type       | Fraunces (display serif) · Archivo (grotesk) · IBM Plex Mono (specs) |
 | Motif      | The reticle: crosshair preloader, rotating watermarks, target-corner card hovers, crosshair cursor |
 | Motion     | Preloader lock-on, staggered line-mask hero reveal, IntersectionObserver fade-ups, clip image reveals, counters, marquee, parallax band, magnetic buttons — all disabled under `prefers-reduced-motion` |
@@ -28,7 +29,8 @@ assets/download-images.sh   # pulls the AI imagery into the repo (see below)
 The original site (reticlems.com) was **unreachable from the build sandbox**
 (network egress allowlist), so all six photos were **AI-generated to match the
 brand** (FLUX.2 Max for the hero, Gemini 3 Pro for the rest) with one
-consistent grade: low-key charcoal + amber/brass rim light.
+consistent grade: low-key ink-blue + cobalt rim light with chrome-silver
+highlights, matched to the RMS brand.
 
 Images are currently **hot-linked** from the render CDN. To vendor them into
 the repo (recommended before launch), run on any normally-connected machine:
