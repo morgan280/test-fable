@@ -28,8 +28,12 @@ jobs:
           for p in "" "capabilities" "quality-and-compliance" "cnc-programming-and-setup" "about-us" "contact" "home"; do
             curl -sL --max-time 30 -A "$UA" "https://reticlems.com/$p" -o "assets/original/page-${p:-root}.html" || true
           done
-          # collect image URLs (GoDaddy serves from *.wsimg.com) + og:image
-          grep -hoE 'https://[a-z0-9.-]*wsimg\.com[^"<> ]+' assets/original/*.html | sort -u > urls.txt || true
+          # known brand assets (the RMS logo + favicon) at full resolution
+          echo "https://img1.wsimg.com/isteam/ip/043b61e4-c4e8-49d5-bf52-087bb6550a0b/EMAIL%20SIGNATURE-6b743b3.png" > urls.txt
+          echo "https://img1.wsimg.com/isteam/ip/043b61e4-c4e8-49d5-bf52-087bb6550a0b/EMAIL%20SIGNATURE-6b743b3.png/:/rs=w:1600" >> urls.txt
+          echo "https://img1.wsimg.com/isteam/ip/043b61e4-c4e8-49d5-bf52-087bb6550a0b/favicon/f76f7b9a-b0dc-48a0-bdc3-da4f196add0e/29ef1597-8acc-457e-833c-01ba66c261c3.png" >> urls.txt
+          # collect image URLs (GoDaddy serves from *.wsimg.com, often protocol-relative) + og:image
+          grep -hoE '(https:)?//[a-z0-9.-]*wsimg\.com[^"<> \\]+' assets/original/*.html | sed 's|^//|https://|' | sort -u >> urls.txt || true
           grep -hoE '"og:image" content="[^"]+"' assets/original/*.html | grep -oE 'https://[^"]+' >> urls.txt || true
           grep -hoE 'https://[^"<> ]+\.(png|jpe?g|webp)[^"<> ]*' assets/original/*.html >> urls.txt || true
           sort -u urls.txt | head -80 | while read -r u; do
