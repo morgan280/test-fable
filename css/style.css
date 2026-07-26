@@ -79,9 +79,10 @@ em { font-style: italic; }
   animation: pr-draw 0.5s var(--ease-out) 0.7s forwards;
 }
 .pr-dot { fill: var(--accent-2); opacity: 0; animation: pr-pop 0.3s var(--ease-out) 1s forwards; }
-.preloader__word {
-  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.5em;
-  color: var(--fog); opacity: 0; animation: pr-fade 0.5s ease 0.8s forwards;
+.preloader__logo {
+  height: 44px; width: auto;
+  opacity: 0; animation: pr-fade 0.5s ease 0.8s forwards;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.6));
 }
 @keyframes pr-draw { to { stroke-dashoffset: 0; } }
 @keyframes pr-pop { from { opacity: 0; transform: scale(0.4); transform-origin: center; } to { opacity: 1; transform: scale(1); } }
@@ -126,12 +127,13 @@ em { font-style: italic; }
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
 }
 .nav__brand { display: flex; align-items: center; gap: 10px; color: var(--paper); }
-.nav__mark { width: 30px; height: 30px; color: var(--accent); flex: none; }
-.nav__word {
-  font-family: var(--font-mono); font-weight: 500;
-  font-size: 15px; letter-spacing: 0.22em;
+.nav__logo {
+  height: 46px; width: auto; display: block;
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.55));
+  transition: height 0.4s var(--ease-out), transform 0.3s var(--ease-out);
 }
-.nav__word em { font-style: normal; color: var(--accent-2); margin-left: 0.3em; }
+.nav.is-solid .nav__logo { height: 38px; }
+.nav__brand:hover .nav__logo { transform: scale(1.04); }
 .nav__links { display: flex; align-items: center; gap: clamp(16px, 2.5vw, 34px); }
 .nav__link {
   position: relative; font-size: 13.5px; font-weight: 500;
@@ -665,6 +667,10 @@ a.contact__val:hover { color: var(--accent-2); }
   gap: clamp(32px, 4vw, 56px);
   padding-bottom: clamp(44px, 6vw, 68px);
 }
+.footer__logo {
+  height: 52px; width: auto; display: block;
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.55));
+}
 .footer__tag { margin-top: 18px; font-size: 14px; color: var(--fog); line-height: 1.7; }
 .footer__col { display: grid; gap: 12px; align-content: start; }
 .footer__col h4 {
@@ -722,6 +728,7 @@ a.contact__val:hover { color: var(--accent-2); }
 /* ── Mobile nav ────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .nav__burger { display: flex; z-index: 130; }
+  .nav__logo, .nav.is-solid .nav__logo { height: 34px; }
   .nav__links {
     position: fixed; inset: 0; z-index: 120;
     flex-direction: column; justify-content: center; gap: 30px;
