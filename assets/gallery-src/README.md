@@ -25,5 +25,6 @@ Files are used in **alphabetical order** → gallery slots 1–6, so name them:
 Only upload the photos you want on the site — the first six (by name) are
 used and anything else in this folder is ignored.
 
-Until real files are here, the site shows AI stand-ins for slots 1–5 and a
-"Reserved" tile for slot 6.
+Slot 6 is fully automatic: the site shows a "Reserved" tile until a `6-*`
+file exists here, then promotes it to a live gallery card on its own —
+no code change needed.

@@ -322,6 +322,34 @@
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); }
       });
     });
+
+    /* Slot 6 ships as a reserved tile; promote it to a live card
+       automatically once its image exists in assets/gallery. */
+    const reserved = document.querySelector(".gcard--empty");
+    if (reserved) {
+      const probe = new Image();
+      probe.onload = () => {
+        const fig = document.createElement("figure");
+        fig.className = "gcard";
+        fig.tabIndex = 0;
+        fig.setAttribute("role", "button");
+        fig.setAttribute("aria-label", "Inspect: production batch of billet components");
+        fig.dataset.full = "assets/gallery/6.webp";
+        fig.dataset.title = "Production Run";
+        fig.dataset.spec = "6061 BILLET · REPEAT PRODUCTION";
+        fig.innerHTML =
+          '<img src="assets/gallery/6-thumb.webp" alt="Batch of machined billet aluminum components after a production run" loading="lazy" width="560" height="373">' +
+          '<div class="gcard__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
+          '<figcaption class="gcard__cap"><strong>Production Run</strong><span>Batch Components</span></figcaption>';
+        reserved.replaceWith(fig);
+        const i = cards.push(fig) - 1;
+        fig.addEventListener("click", () => open(i));
+        fig.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); }
+        });
+      };
+      probe.src = "assets/gallery/6-thumb.webp";
+    }
     document.getElementById("inspectClose").addEventListener("click", close);
     document.getElementById("inspectPrev").addEventListener("click", () => nav(-1));
     document.getElementById("inspectNext").addEventListener("click", () => nav(1));
