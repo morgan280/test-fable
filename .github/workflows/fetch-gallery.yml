@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: fetch-gallery
@@ -26,9 +27,8 @@ jobs:
           set -e
           sudo apt-get update -qq && sudo apt-get install -y -qq webp imagemagick
           mkdir -p assets/gallery
-          shopt -s nullglob nocaseglob
-          SRC=(assets/gallery-src/*.jpg assets/gallery-src/*.jpeg assets/gallery-src/*.png assets/gallery-src/*.webp)
-          shopt -u nocaseglob
+          mapfile -t SRC < <(find assets/gallery-src -maxdepth 1 -type f \
+            \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) | sort -f)
           process() { # $1 input, $2 slot number
             convert "$1" -auto-orient -resize 1600x -strip "/tmp/f.png"
             convert "$1" -auto-orient -resize 560x  -strip "/tmp/t.png"
@@ -70,3 +70,8 @@ jobs:
           git add assets/gallery
           git commit -m "Rebuild optimized gallery images" || echo "no changes"
           git push
+
+      - name: Trigger Pages deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref "$GITHUB_REF_NAME"
