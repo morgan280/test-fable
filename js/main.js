@@ -26,6 +26,7 @@
   /* ── Image fallback (CDN unreachable → styled backdrop) ── */
   document.querySelectorAll("img").forEach((img) => {
     img.addEventListener("error", () => {
+      if (img.closest("#inspect") || !img.getAttribute("src")) return;
       const host = img.closest("[data-reveal-img], .hero__media, .band__media, figure") || img.parentElement;
       if (host) host.classList.add("img-fallback");
     });
@@ -254,6 +255,110 @@
       window.location.href = `mailto:M.Fetter@ReticleMS.com?subject=${subject}&body=${body}`;
       status.textContent = "Opening your email client… we'll reply within one business day.";
     });
+  }
+
+  /* ── Work gallery: inspection lightbox ─────────────────── */
+  const inspect = document.getElementById("inspect");
+  if (inspect) {
+    const cards = [...document.querySelectorAll(".gcard")];
+    const stage = document.getElementById("inspectStage");
+    const img = document.getElementById("inspectImg");
+    const cap = document.getElementById("inspectCap");
+    const counter = document.getElementById("inspectCounter");
+    const coords = document.getElementById("inspectCoords");
+    const loupe = document.getElementById("inspectLoupe");
+    const ZOOM = 2.4;
+    let idx = 0, opener = null;
+
+    const pad = (n) => String(n).padStart(2, "0");
+
+    function render() {
+      const c = cards[idx];
+      img.src = c.dataset.full;
+      img.alt = c.querySelector("img").alt;
+      cap.innerHTML = `<strong>${c.dataset.title}</strong> · ${c.dataset.spec}`;
+      counter.textContent = `${pad(idx + 1)} / ${pad(cards.length)}`;
+      loupe.classList.remove("is-on");
+      // preload neighbors for instant paging
+      [idx + 1, idx - 1].forEach((n) => {
+        const nc = cards[(n + cards.length) % cards.length];
+        new Image().src = nc.dataset.full;
+      });
+    }
+    function open(i) {
+      idx = i;
+      opener = document.activeElement;
+      render();
+      inspect.hidden = false;
+      requestAnimationFrame(() => inspect.classList.add("is-open"));
+      document.body.style.overflow = "hidden";
+      document.getElementById("inspectClose").focus();
+      document.addEventListener("keydown", onKeys);
+    }
+    function close() {
+      inspect.classList.remove("is-open");
+      inspect.hidden = true;
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKeys);
+      if (opener && opener.focus) opener.focus();
+    }
+    function nav(d) {
+      idx = (idx + d + cards.length) % cards.length;
+      inspect.classList.remove("is-open");
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        render();
+        inspect.classList.add("is-open");
+      }));
+    }
+    function onKeys(e) {
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") nav(1);
+      else if (e.key === "ArrowLeft") nav(-1);
+    }
+
+    cards.forEach((c, i) => {
+      c.addEventListener("click", () => open(i));
+      c.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); }
+      });
+    });
+    document.getElementById("inspectClose").addEventListener("click", close);
+    document.getElementById("inspectPrev").addEventListener("click", () => nav(-1));
+    document.getElementById("inspectNext").addEventListener("click", () => nav(1));
+    inspect.querySelector(".inspect__backdrop").addEventListener("click", close);
+
+    // loupe magnifier + metrology-style coordinate readout
+    function track(clientX, clientY) {
+      const r = img.getBoundingClientRect();
+      const px = (clientX - r.left) / r.width;
+      const py = (clientY - r.top) / r.height;
+      if (px < 0 || px > 1 || py < 0 || py > 1) { loupe.classList.remove("is-on"); return; }
+      loupe.classList.add("is-on");
+      loupe.style.left = `${clientX - r.left}px`;
+      loupe.style.top = `${clientY - r.top}px`;
+      loupe.style.backgroundImage = `url("${img.src}")`;
+      const R = loupe.offsetWidth / 2;
+      loupe.style.backgroundSize = `${r.width * ZOOM}px ${r.height * ZOOM}px`;
+      loupe.style.backgroundPosition = `${R - px * r.width * ZOOM}px ${R - py * r.height * ZOOM}px`;
+      coords.textContent = `X ${(px * 254).toFixed(1).padStart(6, "0")} · Y ${(py * 169.3).toFixed(1).padStart(6, "0")}`;
+    }
+    stage.addEventListener("mousemove", (e) => track(e.clientX, e.clientY));
+    stage.addEventListener("mouseleave", () => loupe.classList.remove("is-on"));
+    stage.addEventListener("touchmove", (e) => {
+      const t = e.touches[0];
+      if (t) track(t.clientX, t.clientY);
+    }, { passive: true });
+    stage.addEventListener("touchend", () => loupe.classList.remove("is-on"));
+
+    // swipe to page on touch
+    let swipeX = null;
+    inspect.addEventListener("touchstart", (e) => { swipeX = e.touches[0].clientX; }, { passive: true });
+    inspect.addEventListener("touchend", (e) => {
+      if (swipeX === null) return;
+      const dx = e.changedTouches[0].clientX - swipeX;
+      if (Math.abs(dx) > 60) nav(dx < 0 ? 1 : -1);
+      swipeX = null;
+    }, { passive: true });
   }
 
   /* ── Footer year ───────────────────────────────────────── */
