@@ -77,6 +77,17 @@ skipped entirely on small screens, `prefers-reduced-motion`, or data-saver.
 To swap footage, edit the video id in `.github/workflows/fetch-video.yml`
 and push — the workflow re-downloads, re-grades, and re-commits.
 
+## Work gallery & inspection lightbox
+
+"The Work" (#work) is a six-image gallery served as WebP (thumbs ~16–37 KB
+lazy-loaded, full images ~80–210 KB loaded on click). Clicking a frame opens
+the **inspection lightbox**: crosshair lock-on sweep, HUD readouts, live
+metrology-style coordinates, and a 2.4× reticle loupe that follows the
+cursor (touch: drag to inspect; keyboard: arrows/Escape; swipe to page).
+Images are AI-generated representative shots — to swap in real portfolio
+photos, replace the numbered files in `assets/gallery/` (or update the ids
+in `.github/workflows/fetch-gallery.yml` and push to re-run the optimizer).
+
 ## Form handling
 
 The quote form composes a pre-filled email via `mailto:`. To capture leads
