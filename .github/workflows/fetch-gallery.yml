@@ -1,0 +1,55 @@
+name: Fetch and optimize gallery images
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/fetch-gallery.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-gallery
+  cancel-in-progress: true
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download and convert to WebP (full + thumb)
+        run: |
+          set -e
+          sudo apt-get update -qq && sudo apt-get install -y -qq webp
+          mkdir -p assets/gallery
+          BASE="https://krayawn-mcp.delicate-star-fc13.workers.dev/media"
+          declare -A IMAGES=(
+            [1]="img_4e696875b7e448bf8502"
+            [2]="img_934e5abaa90f4395b5e2"
+            [3]="img_a387d984de7842e9b869"
+            [4]="img_6eac94e9a1cd4fd399a5"
+            [5]="img_0b9ffa6790b242198ce7"
+            [6]="img_b9c4e79d44cf44a18dba"
+          )
+          for n in 1 2 3 4 5 6; do
+            id="${IMAGES[$n]}"
+            curl -sL --max-time 60 "$BASE/$id" -o "/tmp/$n.src"
+            file -b --mime-type "/tmp/$n.src" | grep -q '^image/' || { echo "bad download $id"; exit 1; }
+            # normalize via ImageMagick (handles webp/png/jpeg input), then cwebp for tight output
+            convert "/tmp/$n.src" -resize 1600x -strip "/tmp/$n-full.png"
+            convert "/tmp/$n.src" -resize 560x  -strip "/tmp/$n-thumb.png"
+            cwebp -quiet -q 80 "/tmp/$n-full.png"  -o "assets/gallery/$n.webp"
+            cwebp -quiet -q 76 "/tmp/$n-thumb.png" -o "assets/gallery/$n-thumb.webp"
+          done
+          ls -la assets/gallery/
+
+      - name: Commit gallery assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/gallery
+          git commit -m "Add optimized gallery images (WebP full + thumbs)"
+          git push
