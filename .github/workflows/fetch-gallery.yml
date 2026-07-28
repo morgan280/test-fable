@@ -28,7 +28,8 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq webp imagemagick
           mkdir -p assets/gallery
           mapfile -t SRC < <(find assets/gallery-src -maxdepth 1 -type f \
-            \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) | sort -f)
+            \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+            ! -iname 'portrait-*' ! -iname 'weld-*' | sort -f)
           process() { # $1 input, $2 slot number
             convert "$1" -auto-orient -resize 1600x -strip "/tmp/f.png"
             convert "$1" -auto-orient -resize 560x  -strip "/tmp/t.png"
@@ -63,11 +64,26 @@ jobs:
           fi
           ls -la assets/gallery/
 
+      - name: Build craft-section images (portrait-* / weld-* drop-ins)
+        run: |
+          set -e
+          shopt -s nullglob nocaseglob
+          craft() { # $1 source, $2 output basename, $3 max width
+            convert "$1" -auto-orient -resize "$3"x -strip /tmp/c.png
+            cwebp -quiet -q 82 /tmp/c.png -o "assets/img/$2.webp"
+            echo "built assets/img/$2.webp from $1"
+          }
+          P=(assets/gallery-src/portrait-*)
+          W=(assets/gallery-src/weld-*)
+          [ ${#P[@]} -gt 0 ] && craft "${P[0]}" craft-portrait 1400
+          [ ${#W[@]} -gt 0 ] && craft "${W[0]}" craft-weld 1600
+          true
+
       - name: Commit gallery assets
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/gallery
+          git add assets/gallery assets/img
           git commit -m "Rebuild optimized gallery images" || echo "no changes"
           git push
 

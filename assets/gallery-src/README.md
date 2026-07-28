@@ -28,3 +28,9 @@ used and anything else in this folder is ignored.
 Slot 6 is fully automatic: the site shows a "Reserved" tile until a `6-*`
 file exists here, then promotes it to a live gallery card on its own —
 no code change needed.
+
+Two special names also work here (not counted as gallery slots):
+
+- `portrait-*` → replaces the craftsman photo in the "Craft" section
+  (auto-fitted vertically)
+- `weld-*` → replaces the wide welding photo below it

@@ -32,6 +32,18 @@
     });
   });
 
+  /* Craft imagery: prefer locally hosted files once they exist */
+  [
+    ["assets/img/craft-portrait.webp", ".craft__portrait img"],
+    ["assets/img/craft-weld.webp", ".craft__weld img"],
+  ].forEach(([src, sel]) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    const probe = new Image();
+    probe.onload = () => { el.src = src; };
+    probe.src = src;
+  });
+
   /* ── Hero background video (lazy, fallback-safe) ───────── */
   const heroVideo = document.getElementById("heroVideo");
   if (heroVideo && heroVideo.dataset.src && !prefersReduced) {
