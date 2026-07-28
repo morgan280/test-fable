@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - .github/workflows/fetch-gallery.yml
+      - assets/gallery-src/**
 
 permissions:
   contents: write
@@ -20,30 +21,46 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download and convert to WebP (full + thumb)
+      - name: Build gallery WebPs (user files first, stand-ins otherwise)
         run: |
           set -e
           sudo apt-get update -qq && sudo apt-get install -y -qq webp imagemagick
           mkdir -p assets/gallery
-          BASE="https://krayawn-mcp.delicate-star-fc13.workers.dev/media"
-          declare -A IMAGES=(
-            [1]="img_4e696875b7e448bf8502"
-            [2]="img_934e5abaa90f4395b5e2"
-            [3]="img_a387d984de7842e9b869"
-            [4]="img_6eac94e9a1cd4fd399a5"
-            [5]="img_0b9ffa6790b242198ce7"
-            [6]="img_b9c4e79d44cf44a18dba"
-          )
-          for n in 1 2 3 4 5 6; do
-            id="${IMAGES[$n]}"
-            curl -sL --max-time 60 "$BASE/$id" -o "/tmp/$n.src"
-            file -b --mime-type "/tmp/$n.src" | grep -q '^image/' || { echo "bad download $id"; exit 1; }
-            # normalize via ImageMagick (handles webp/png/jpeg input), then cwebp for tight output
-            convert "/tmp/$n.src" -resize 1600x -strip "/tmp/$n-full.png"
-            convert "/tmp/$n.src" -resize 560x  -strip "/tmp/$n-thumb.png"
-            cwebp -quiet -q 80 "/tmp/$n-full.png"  -o "assets/gallery/$n.webp"
-            cwebp -quiet -q 76 "/tmp/$n-thumb.png" -o "assets/gallery/$n-thumb.webp"
-          done
+          shopt -s nullglob nocaseglob
+          SRC=(assets/gallery-src/*.jpg assets/gallery-src/*.jpeg assets/gallery-src/*.png assets/gallery-src/*.webp)
+          shopt -u nocaseglob
+          process() { # $1 input, $2 slot number
+            convert "$1" -auto-orient -resize 1600x -strip "/tmp/f.png"
+            convert "$1" -auto-orient -resize 560x  -strip "/tmp/t.png"
+            cwebp -quiet -q 80 /tmp/f.png -o "assets/gallery/$2.webp"
+            cwebp -quiet -q 76 /tmp/t.png -o "assets/gallery/$2-thumb.webp"
+          }
+          if [ ${#SRC[@]} -gt 0 ]; then
+            echo "using ${#SRC[@]} owner-provided files from assets/gallery-src/"
+            n=1
+            for f in "${SRC[@]}"; do
+              [ $n -le 6 ] || break
+              echo "slot $n <- $f"
+              process "$f" "$n"
+              n=$((n+1))
+            done
+          else
+            echo "no owner files yet — using AI stand-ins"
+            BASE="https://krayawn-mcp.delicate-star-fc13.workers.dev/media"
+            declare -A IMAGES=(
+              [1]="img_934e5abaa90f4395b5e2"
+              [2]="img_4e696875b7e448bf8502"
+              [3]="img_a387d984de7842e9b869"
+              [4]="img_6eac94e9a1cd4fd399a5"
+              [5]="img_0b9ffa6790b242198ce7"
+            )
+            for n in 1 2 3 4 5; do
+              curl -sL --max-time 60 "$BASE/${IMAGES[$n]}" -o "/tmp/$n.src"
+              file -b --mime-type "/tmp/$n.src" | grep -q '^image/' || { echo "bad download"; exit 1; }
+              process "/tmp/$n.src" "$n"
+            done
+            rm -f assets/gallery/6.webp assets/gallery/6-thumb.webp
+          fi
           ls -la assets/gallery/
 
       - name: Commit gallery assets
@@ -51,5 +68,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/gallery
-          git commit -m "Add optimized gallery images (WebP full + thumbs)"
+          git commit -m "Rebuild optimized gallery images" || echo "no changes"
           git push

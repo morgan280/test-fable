@@ -260,7 +260,7 @@
   /* ── Work gallery: inspection lightbox ─────────────────── */
   const inspect = document.getElementById("inspect");
   if (inspect) {
-    const cards = [...document.querySelectorAll(".gcard")];
+    const cards = [...document.querySelectorAll(".gcard:not(.gcard--empty)")];
     const stage = document.getElementById("inspectStage");
     const img = document.getElementById("inspectImg");
     const cap = document.getElementById("inspectCap");
