@@ -345,14 +345,14 @@
         fig.className = "gcard";
         fig.tabIndex = 0;
         fig.setAttribute("role", "button");
-        fig.setAttribute("aria-label", "Inspect: production batch of billet components");
+        fig.setAttribute("aria-label", "Inspect: batch of machined housings under inspection");
         fig.dataset.full = "assets/gallery/6.webp";
-        fig.dataset.title = "Production Run";
-        fig.dataset.spec = "6061 BILLET · REPEAT PRODUCTION";
+        fig.dataset.title = "Batch Inspection";
+        fig.dataset.spec = "MACHINED HOUSINGS · IN-PROCESS QC";
         fig.innerHTML =
-          '<img src="assets/gallery/6-thumb.webp" alt="Batch of machined billet aluminum components after a production run" loading="lazy" width="560" height="373">' +
+          '<img src="assets/gallery/6-thumb.webp" alt="Batch of machined aluminum housings beside digital calipers on the inspection bench" loading="lazy" width="560" height="373">' +
           '<div class="gcard__corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
-          '<figcaption class="gcard__cap"><strong>Production Run</strong><span>Batch Components</span></figcaption>';
+          '<figcaption class="gcard__cap"><strong>Batch Inspection</strong><span>Machined Housings</span></figcaption>';
         reserved.replaceWith(fig);
         const i = cards.push(fig) - 1;
         fig.addEventListener("click", () => open(i));
