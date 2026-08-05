@@ -252,10 +252,21 @@ em { font-style: italic; }
 .is-loaded .line-mask:nth-child(3) .line { animation-delay: 0.34s; }
 @keyframes line-up { to { transform: translateY(0); } }
 
+.hero__tagline {
+  margin-top: 26px;
+  font-family: var(--font-display); font-style: italic;
+  font-size: clamp(20px, 2.6vw, 30px); letter-spacing: 0.01em;
+  color: #dce4f2;
+  background: var(--chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .hero__sub {
   max-width: 54ch; margin-top: 30px;
   font-size: clamp(16px, 1.6vw, 18.5px); line-height: 1.7; color: var(--fog);
 }
+.hero__tagline + .hero__sub { margin-top: 18px; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; }
 
 .hero__specs {
