@@ -955,6 +955,9 @@ a.contact__val:hover { color: var(--accent-2); }
   }
   .nav__links.is-open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
   .nav__link { font-size: 17px; }
+  /* the bar's backdrop-filter creates a containing block that traps the
+     fixed fullscreen menu inside it — drop the filter while the menu is open */
+  .nav.is-menu-open { -webkit-backdrop-filter: none; backdrop-filter: none; }
   .nav.is-menu-open .nav__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav.is-menu-open .nav__burger span:nth-child(2) { opacity: 0; }
   .nav.is-menu-open .nav__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
