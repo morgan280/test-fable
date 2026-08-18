@@ -250,7 +250,7 @@
   const form = document.getElementById("quoteForm");
   const status = document.getElementById("formStatus");
   if (form) {
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const d = new FormData(form);
       const name = (d.get("name") || "").toString().trim();
@@ -260,12 +260,31 @@
         status.textContent = "Please fill in name, email, and project details.";
         return;
       }
-      const subject = encodeURIComponent(`Quote request — ${name}${d.get("company") ? " · " + d.get("company") : ""}`);
-      const body = encodeURIComponent(
-        `Name: ${name}\nCompany: ${d.get("company") || "—"}\nEmail: ${email}\nPhone: ${d.get("phone") || "—"}\n\nProject details:\n${details}\n`
-      );
-      window.location.href = `mailto:M.Fetter@ReticleMS.com?subject=${subject}&body=${body}`;
-      status.textContent = "Opening your email client… we'll reply within one business day.";
+      const btn = form.querySelector('button[type="submit"]');
+      status.textContent = "Sending…";
+      if (btn) btn.disabled = true;
+      try {
+        // Server-side send (Hostinger). Static hosts have no PHP — the
+        // fetch fails there and we fall back to a mailto: draft below.
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: d,
+          headers: { Accept: "application/json" },
+        });
+        const out = res.ok ? await res.json() : null;
+        if (!out || !out.ok) throw new Error("send-failed");
+        form.reset();
+        status.textContent = "✓ Request received — we'll reply within one business day.";
+      } catch {
+        const subject = encodeURIComponent(`Quote request — ${name}${d.get("company") ? " · " + d.get("company") : ""}`);
+        const body = encodeURIComponent(
+          `Name: ${name}\nCompany: ${d.get("company") || "—"}\nEmail: ${email}\nPhone: ${d.get("phone") || "—"}\n\nProject details:\n${details}\n`
+        );
+        window.location.href = `mailto:M.Fetter@ReticleMS.com?subject=${subject}&body=${body}`;
+        status.textContent = "Opening your email client… we'll reply within one business day.";
+      } finally {
+        if (btn) btn.disabled = false;
+      }
     });
   }
 
